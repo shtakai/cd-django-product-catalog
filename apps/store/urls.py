@@ -21,6 +21,10 @@ urlpatterns = [
     url(r'^create', views.create, name='store_create_product'),
     url(r'^edit/(?P<product_id>\d+)/$', views.edit, name='store_edit_product'),
     url(r'^update/(?P<product_id>\d+)/$', views.update, name='store_update_product'),
+    url(r'^add_cart/$', views.add_cart, name='store_add_cart'),
+    url(r'^delete_cart/(?P<cart_id>\d+)/$', views.delete_cart, name='store_delete_cart'),
+    url(r'^checkout$', views.checkout, name='store_checkout'),
+    url(r'^commit_order', views.commit_order, name='store_commit_order'),
 
     # url(r'^products/', include('apps.store.urls')),
     # url(r'^admin/', admin.site.urls),

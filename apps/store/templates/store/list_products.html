@@ -8,6 +8,7 @@
   <div class="container">
     <h1>Trader's Store</h1>
     <h2>Product Listing:</h2>
+    <h3><a href="{% url 'store_checkout' %}">Your Cart({{ request.session.carts }})</a></h3>
     <table>
       <thead>
         <tr>
@@ -16,6 +17,7 @@
           <th>Price ($)</th>
           <th>Date Added</th>
           <th>Action</th>
+          <th>Order</th>
         </tr>
       </thead>
       <tbody>
@@ -28,6 +30,21 @@
             <td>
               <a href="{% url 'store_edit_product' product.id %}">Edit</a>
               <a href="#">Delete</a>
+            </td>
+            <td>
+                <form action="{% url 'store_add_cart' %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="product_id" value="{{ product.id }}">
+                <label for="amount">Amount</label>
+                <select id="amount" name="amount">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+                <input type="submit" value="Order">
+              </form>
             </td>
           </tr>
         {% endfor %}

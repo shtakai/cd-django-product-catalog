@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cart</title>
+</head>
+<body>
+  <h2>Check Out</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Qty</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for cart in carts %}
+      <tr>
+        <td>{{ cart.amount }}</td>
+        <td>{{ cart.product.name }}</td>
+        <td>{{ cart.product.price }}</td>
+        <td><a href="{% url 'store_delete_cart' cart.id %}">Delete</a></td>
+      </tr>
+      {% endfor %}
+      {% if carts %}
+      <tr>
+        <td></td>
+        <td>Total</td>
+        <td>{{ total }}</td>
+        <td></td>
+      </tr>
+      {% endif %}
+    </tbody>
+  </table>
+  {% if carts %}
+  <form action="{% url 'store_commit_order' %}" method="POST">
+    <h3>Billing Info</h3>
+    {% csrf_token %}
+    <label for="name">Name</label>
+    <input id="name" type="text" name="name">
+    <label for="address">Address</label>
+    <input id="address" type="text" name="address">
+    <label for="card_number">Card Number</label>
+    <input id="card_number" type="text" name="card_number">
+    <input type="submit" value="Order">
+  </form>
+
+
+  {% endif %}
+
+</body>
+</html>
