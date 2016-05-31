@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>List of Products</title>
+</head>
+<body>
+  <div class="container">
+    <h1>Trader's Store</h1>
+    <h2>Product Listing:</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Manufacturer</th>
+          <th>Product Name</th>
+          <th>Price ($)</th>
+          <th>Date Added</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for product in products %}
+          <tr>
+            <td>{{ product.manufacturer.name }}</td>
+            <td>{{ product.name }}</td>
+            <td>{{ product.price }}</td>
+            <td>{{ product.created_at }}</td>
+            <td>
+              <a href="{% url 'store_edit_product' product.id %}">Edit</a>
+              <a href="#">Delete</a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div class="container">
+    <h2>Add a Product</h2>
+    <form action="{% url 'store_create_product' %}" method="POST">
+      {% csrf_token %}
+      <label for="manufacturer">Manufacturer / Brand:</label>
+      <select id="manufacturer" name="manufacturer">
+        {% for manufacturer in manufacturers %}
+        <option value="{{manufacturer.id}}">{{ manufacturer.name }}</option>
+        {% endfor %}
+      </select>
+      <label for="name">Product Name:</label>
+      <input type="text" id="name" name="name">
+      <label for="price">Price ($):</label>
+      <input type="text" id="price" name="price">
+      <label for="description">Description</label>
+      <textarea id="description" name="description" cols="30" rows="10"></textarea>
+      <input type="submit" value="Add">
+    </form>
+  </div>
+</body>
+</html>

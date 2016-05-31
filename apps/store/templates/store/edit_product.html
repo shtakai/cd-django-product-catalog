@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ product.name }}</title>
+</head>
+<body>
+  <div class="container">
+    <a href="/products/">Go to Product Listing</a>
+  </div>
+  <div class="container">
+    <h2>{{ product.name }}</h2>
+
+    <form action="{% url 'store_update_product' product.id %}" method="POST">
+      {% csrf_token %}
+      <label for="manufacturer">Manufacturer / Brand:</label>
+      <select id="manufacturer" name="manufacturer">
+        {% for manufacturer in manufacturers %}
+        <option value="{{manufacturer.id}}"
+          {% if product.manufacturer_id == manufacturer.id %}
+            selected
+          {% endif %}
+          >{{ manufacturer.name }}</option>
+        {% endfor %}
+      </select>
+
+      <label for="name">Product Name:</label>
+      <input type="text" id="name" name="name" value="{{ product.name }}">
+      <label for="price">Price ($):</label>
+      <input type="text" id="price" name="price" value="{{ product.price }}">
+      <label for="description">Description</label>
+      <textarea id="description" name="description" cols="30" rows="10" >{{ product.description }}</textarea>
+      <input type="submit" value="Add">
+    </form>
+  </div>
+</body>
+</html>
